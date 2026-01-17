@@ -1,0 +1,21 @@
+[33m464e33d[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mpayment_flow[m[33m)[m HEAD@{0}: commit: idk changes pull ki thi payment flow se masla hogaya
+[33md0e1f72[m[33m ([m[1;31morigin/payment_flow[m[33m)[m HEAD@{1}: checkout: moving from auth_flow to payment_flow
+[33m5b44139[m[33m ([m[1;32mauth_flow[m[33m)[m HEAD@{2}: reset: moving to HEAD
+[33m5b44139[m[33m ([m[1;32mauth_flow[m[33m)[m HEAD@{3}: commit: completed booking screen
+[33m801af3a[m HEAD@{4}: commit: saved changes
+[33m01ee967[m HEAD@{5}: commit: saved changes to booking screen
+[33medaaf07[m HEAD@{6}: commit: stepper completed
+[33m1970091[m HEAD@{7}: commit: completed the review screen and components
+[33m9d4305b[m HEAD@{8}: commit: Almost completed car detail screen, reviews left
+[33m1f6f63f[m HEAD@{9}: commit: filter screen completed
+[33m3ab8bde[m HEAD@{10}: commit: Updated changes to filter screen
+[33m5bbdc80[m HEAD@{11}: commit: saved changes
+[33m7d76dbd[m HEAD@{12}: commit: completed one component of filter screen
+[33mee407e6[m HEAD@{13}: commit (merge): Merge remote-tracking branch 'origin/home_screen' into auth_flow
+[33m996cc74[m HEAD@{14}: checkout: moving from home_screen to auth_flow
+[33m14061e6[m[33m ([m[1;31morigin/home_screen[m[33m, [m[1;32mhome_screen[m[33m)[m HEAD@{15}: checkout: moving from auth_flow to home_screen
+[33m996cc74[m HEAD@{16}: commit: WIP: my personal changed before update
+[33m96a35c3[m[33m ([m[1;31morigin/auth_flow[m[33m)[m HEAD@{17}: reset: moving to origin/auth_flow
+[33m96a35c3[m[33m ([m[1;31morigin/auth_flow[m[33m)[m HEAD@{18}: checkout: moving from main to auth_flow
+[33m07f52ec[m[33m ([m[1;32mmain[m[33m)[m HEAD@{19}: reset: moving to HEAD
+[33m07f52ec[m[33m ([m[1;32mmain[m[33m)[m HEAD@{20}: clone: from https://github.com/mukesh2309/car-app.git
