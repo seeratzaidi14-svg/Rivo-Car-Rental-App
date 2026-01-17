@@ -57,7 +57,8 @@ const SignInScreen = () => {
        </View>
 
       <View style={styles.buttonContainer}>
-        <Button onPress={() => navigate('tabStack')} text="Login" textStyles={styles.buttonText} />
+        <Button onPress={() => {// TODO: replace with backend login
+          navigate('tabStack');}} text="Login" textStyles={styles.buttonText} />
       </View>
 
       <View style={styles.haveAccountContainer}>
