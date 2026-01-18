@@ -1,5 +1,6 @@
-import { View, Text, ScrollView, Image } from "react-native";
+import { View, Text, ScrollView, Image, Alert } from "react-native";
 import React from "react";
+import { supabase } from "../../services/supabaseClient";
 import { createStyles } from "./signup.styles";
 import { useSignup } from "./signup.hook";
 import assets from "../../assets";
@@ -12,6 +13,36 @@ const SignUpScreen = () => {
     const styles = createStyles();
     const {isSecure, setIsSecure} = useSignup();
     const {logo_black} = assets; 
+    const [email, setEmail] = React.useState('');
+    const [password, setPassword] = React.useState('');
+    const [loading, setLoading] = React.useState(false);
+    const handleSignUp = async () => {
+        if (!email || !password) {
+            Alert.alert('Please fill all fields!');
+            return;
+        }
+
+        try {
+            setLoading(true);
+            const {error} = await supabase.auth.signUp({
+                email, 
+                password,
+            });
+
+            if (error) {
+                Alert.alert(error.message);
+                return;
+            }
+
+            Alert.alert('Account created succesfully!');
+            navigate('SignInScreen');
+        } catch (err) {
+            console.error(err);
+            Alert.alert('Something went wrong');
+        } finally {
+            setLoading(false);
+        }
+    };
     return (
         <ScrollView style={styles.container}>
             <View style={styles.flexRow}>
@@ -30,14 +61,14 @@ const SignUpScreen = () => {
                />
 
                 <InputComponent
-                  onChangeText={e => console.log(e)}
+                  onChangeText={setEmail}
                   placeholder={'Email Address'}
                />
 
                <InputComponent
                   isSecure
                   secureTextEntry={isSecure}
-                  onChangeText={e => console.log(e)}
+                  onChangeText={setPassword}
                   placeholder={'Password'}
                   onSecurePress={() => setIsSecure(!isSecure)}
                />
@@ -50,7 +81,7 @@ const SignUpScreen = () => {
 
          {renderMarginTop(12)}
          <View style={styles.buttonContainer}>
-             <Button text="Sign Up" textStyles={styles.buttonText} />
+             <Button text={loading ? 'Creating account...' : 'Sign Up'} onPress={handleSignUp} textStyles={styles.buttonText} />
          </View>
 
          <View style={styles.haveAccountContainer}>

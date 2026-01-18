@@ -1,15 +1,42 @@
 import React from 'react';
-import {Image, Text, View} from 'react-native';
+import {Image, Text, View, Alert} from 'react-native';
 import assets from '../../assets';
 import {createStyles} from './reset.styles';
 import {renderMarginBottom, renderMarginTop} from '../../utils/ui-utils';
 import InputComponent from '../../components/input/component';
 import Button from '../../components/button/component';
-import {goBack, navigate} from '../../navigators/navigation-utilities';
+import {navigate} from '../../navigators/navigation-utilities';
+import {supabase} from '../../services/supabaseClient';
 
 const ResetScreen = () => {
   const styles = createStyles();
   const {logo_black} = assets;
+  const [password, setPassword] = React.useState('');
+  const [loading, setLoading] = React.useState(false);
+  const handleResetPassword = async () => {
+    if (!password) {
+      Alert.alert('Error','Please enter your new password');
+      return;
+    }
+
+    try {
+      setLoading(true);
+      const {error} = await supabase.auth.updateUser({password,});
+      if (error) {
+        Alert.alert('Error', error.message);
+        return;
+      }
+      Alert.alert(
+        'Success',
+        'Your password has been reset successfully.',
+        [{text: 'OK', onPress: () => navigate('SignInScreen'),},]
+      );
+    } catch (e) {
+      Alert.alert('Error', 'Something went wrong');
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
     <View style={styles.container}>
@@ -25,22 +52,20 @@ const ResetScreen = () => {
             </Text>
             {renderMarginTop(12)}
             <Text style={styles.infoText}>
-              Enter the email address associated with your account and
-            </Text>
-            <Text style={styles.infoText}>
-              we'll send you a link to reset your password.
+              Enter a new password for your account.
             </Text>
           </View>
           <View style={styles.inputContainer}>
             <InputComponent
-              onChangeText={e => console.log(e)}
-              placeholder={'Email'}
+              secureTextEntry
+              onChangeText={setPassword}
+              placeholder={'New Password'}
             />
           </View>
           {renderMarginTop(28)}
           <Button
-            onPress={() => navigate('SignInScreen')}
-            text="Continue"
+            onPress={handleResetPassword}
+            text={loading ? 'Updating...' : 'Update Password'}
             textStyles={styles.buttonText}
           />
           {renderMarginTop(28)}

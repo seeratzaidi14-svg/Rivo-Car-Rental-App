@@ -1,21 +1,48 @@
 import React from 'react';
-import {Image, ScrollView, Text, View} from 'react-native';
-import AntDesign from 'react-native-vector-icons/AntDesign';
-import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+import {Image, ScrollView, Text, View, Alert} from 'react-native';
 import assets from '../../assets';
 import Button from '../../components/button/component';
 import CheckBoxComponent from '../../components/checkbox/component';
 import InputComponent from '../../components/input/component';
-import {scale} from '../../theme/scale';
 import {createStyles} from './signin.styles';
 import {useSignin} from './signin.hook';
-import {renderMarginBottom, renderPaddingBottom} from '../../utils/ui-utils';
 import {navigate} from '../../navigators/navigation-utilities';
+import { supabase } from "../../services/supabaseClient";
 
 const SignInScreen = () => {
   const styles = createStyles();
   const {isSecure, setIsSecure} = useSignin();
   const {logo_black} = assets;
+  const [email, setEmail] = React.useState('');
+  const [password, setPassword] = React.useState('');
+  const [loading, setLoading] = React.useState(false);
+  const handleLogin = async () => {
+    if (!email || !password) {
+      Alert.alert('Error', 'Please enter email and password');
+      return;
+    }
+
+    try {
+      setLoading(true);
+      const {error} = await supabase.auth.signInWithPassword({
+        email,
+        password,
+      });
+
+      if (error) {
+        Alert.alert('Login failed', error.message);
+        return;
+      }
+
+      Alert.alert('Success', 'Logged in successfully');
+      navigate('tabStack');
+    } catch (err) {
+      console.error(err);
+      Alert.alert('Error', 'Something went wrong');
+    } finally {
+      setLoading(false);
+    }
+  };
   return (
     <ScrollView style={styles.container}>
       <View style={styles.flexRow}>
@@ -30,14 +57,14 @@ const SignInScreen = () => {
 
       <View style={styles.inputContainer}>
         <InputComponent
-          onChangeText={e => console.log(e)}
-          placeholder={'Email/Phone Number'}
+          onChangeText={setEmail}
+          placeholder={'Email Address'}
         />
 
         <InputComponent
           isSecure
           secureTextEntry={isSecure}
-          onChangeText={e => console.log(e)}
+          onChangeText={setPassword}
           placeholder={'Password'}
           onSecurePress={() => setIsSecure(!isSecure)}
         />
@@ -57,8 +84,10 @@ const SignInScreen = () => {
        </View>
 
       <View style={styles.buttonContainer}>
-        <Button onPress={() => {// TODO: replace with backend login
-          navigate('tabStack');}} text="Login" textStyles={styles.buttonText} />
+        <Button 
+           text={loading ? 'Logging in...' : 'Login'}
+           onPress={handleLogin}
+           textStyles={styles.buttonText}/>
       </View>
 
       <View style={styles.haveAccountContainer}>
@@ -67,21 +96,6 @@ const SignInScreen = () => {
           <Text style={styles.dontHaveText} onPress={() =>  navigate('SignUpScreen') }>Sign Up</Text>
         </Text>
       </View>
-
-      {/*<View style={styles.borderContainer}>
-        <View style={styles.orBorder} />
-        <Text style={styles.orText}>Or</Text>
-        <View style={styles.orBorder} />
-      </View>
-
-      <View style={[styles.buttonContainer, styles.mt14]}>
-        <Button
-          onPress={() => navigate('tabStack')}
-          text="Continue as guest"
-          textStyles={styles.outlineButtonText}
-          buttonStyles={styles.iconButtonStyle}
-        />
-      </View>*/}
 
     </ScrollView>
   );
