@@ -40,7 +40,9 @@ import BookingStatusScreen from '../screens/booking/status/status.screen';
 import ProfileScreen from '../screens/account/profile/profile.screen';
 import EditScreen from '../screens/account/edit/edit.screen';
 import ChatScreen from '../screens/message/chat/chat.screen';
-import AdminDashboard from '../screens/admin/Dashboard/Dashboard.screen';
+import AddCarScreen from '../screens/AddCar/addCar.screen';
+import CarDetailScreen from '../screens/car/car.screen';
+import FavCarScreen from '../screens/favourite/fav.screen';
 
 type NavigationProps = Partial<
   React.ComponentProps<typeof NavigationContainer>
@@ -193,8 +195,8 @@ const RootStack = () => {
     <Stack.Navigator screenOptions={{headerShown: false}}>
       <Stack.Screen
         initialRouteName="CarScreen"
-        name="CarScreen"
-        component={CarScreen}
+        name="CarDetailScreen"
+        component={CarDetailScreen}
         options={{
           cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
         }}
@@ -248,77 +250,25 @@ const RootStack = () => {
           cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
         }}
       />
+      <Stack.Screen
+        name="AddCarScreen"
+        component={AddCarScreen}
+        options={{
+          cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
+        }}
+      />
+      <Stack.Screen
+        name="FavCarScreen"
+        component={FavCarScreen}
+        options={{
+          cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
+        }}
+      />
       
     </Stack.Navigator>
-
-   
     
   );
 };
-
-/*const AdminStack = () => {
-  return (
-    <Stack.Navigator screenOptions={{headerShown:false}}>
-      <Stack.Screen 
-        name="AdminDashboard"
-        component={AdminDashboard}
-        options={{
-          cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
-        }}
-      />
-
-      <Stack.Screen 
-        name="ManageCars"
-        component={require('../screens/admin/ManageCars/manageCars.screen').default}
-        options={{
-          cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
-        }}
-      />
-
-      <Stack.Screen 
-        name="AddCar"
-        component={require('../screens/admin/AddCar/addCar.screen').default}
-        options={{
-          cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
-        }}
-      />
-
-      <Stack.Screen 
-        name="ViewBookings"
-        component={require('../screens/admin/ViewBookings/viewBooking.screen').default}
-        options={{
-          cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
-        }}
-      />
-
-      <Stack.Screen 
-        name="UserMessages"
-        component={require('../screens/admin/UserMessages/userMessage.screen').default}
-        options={{
-          cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
-        }}
-      />
-
-      <Stack.Screen 
-        name="ManageUsers"
-        component={require('../screens/admin/ManageUsers/manageUser.screen').default}
-        options={{
-          cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
-        }}
-      />
-
-      <Stack.Screen 
-        name="AdminChatScreen"
-        component={require('../screens/admin/UserMessages/chat/adminChat.screen').default}
-        options={{
-          cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
-        }}
-      />
-
-    </Stack.Navigator>
-  );
-};*/
-
 
 const CombinedStack = () => {
   const isAuthenticated = false;
@@ -356,14 +306,6 @@ const CombinedStack = () => {
           cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
         }}
       />
-
-      {/*<Stack.Screen
-        name="AdminStack"
-        component={AdminStack}
-        options={{
-          cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
-        }}
-      />*/}
 
     </Stack.Navigator>
   );

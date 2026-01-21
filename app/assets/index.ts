@@ -10,6 +10,15 @@ const assets = {
   person: require('./images/person.png'),
   ferrarilogo: require('./images/ferrarilogo.jpg'),
   success: require('./images/success.png'),
+  toyota: require('./images/toyota.jpg'),
+  audi: require('./images/audi.jpg'),
+  hyundai: require('./images/hyundai.jpg'),
+  kia: require('./images/kia.jpg'),
+  mg: require('./images/mg.jpg'),
+  bmw: require('./images/bmw.jpg'),
+  ford: require('./images/ford.jpg'),
+  mercedes: require('./images/mercedes.jpg'),
+  other: require('./images/other.jpg'),
 };
 
 export default assets;

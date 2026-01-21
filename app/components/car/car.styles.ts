@@ -64,9 +64,13 @@ export const createStyles = () =>
       color: colors.black,
     },
     carBackground: {
+      height: scale(120),
+      width: '100%',
       borderTopRightRadius: scale(16),
       borderTopLeftRadius: scale(16),
       backgroundColor: colors.carBg,
+      alignItems: 'center',
+      justifyContent: 'center',
     },
     
     favContainer: {

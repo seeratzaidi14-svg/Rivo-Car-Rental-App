@@ -13,36 +13,56 @@ const SignUpScreen = () => {
     const styles = createStyles();
     const {isSecure, setIsSecure} = useSignup();
     const {logo_black} = assets; 
+    const [fullName, setFullName] = React.useState('');
+    const [city, setCity] = React.useState('');
     const [email, setEmail] = React.useState('');
     const [password, setPassword] = React.useState('');
     const [loading, setLoading] = React.useState(false);
+    
     const handleSignUp = async () => {
-        if (!email || !password) {
-            Alert.alert('Please fill all fields!');
+       if (!fullName || !email || !password || !city) {
+            Alert.alert('Please fill all fields');
+            return;
+       }
+
+       try {
+        setLoading(true);
+        const {data, error} = await supabase.auth.signUp({
+            email,
+            password,
+        });
+
+        if (error) {
+            Alert.alert(error.message);
             return;
         }
 
-        try {
-            setLoading(true);
-            const {error} = await supabase.auth.signUp({
-                email, 
-                password,
-            });
+        if (data?.user) {
+            const {error: insertError} = await supabase
+            .from('users')
+            .insert([
+                {
+                    id: data.user.id,
+                    full_name: fullName,
+                    city: city,
+                },
+            ]);
 
-            if (error) {
-                Alert.alert(error.message);
+            if (insertError) {
+                Alert.alert('Error saving profile', insertError.message);
                 return;
             }
-
-            Alert.alert('Account created succesfully!');
-            navigate('SignInScreen');
-        } catch (err) {
-            console.error(err);
-            Alert.alert('Something went wrong');
-        } finally {
-            setLoading(false);
         }
+        Alert.alert('Account created successfully!');
+        navigate('SignInScreen');
+       } catch (err) {
+        console.error(err);
+        Alert.alert('Something went wrong');
+       } finally {
+        setLoading(false);
+       }
     };
+
     return (
         <ScrollView style={styles.container}>
             <View style={styles.flexRow}>
@@ -56,7 +76,7 @@ const SignUpScreen = () => {
 
            <View style={styles.inputContainer}>
                <InputComponent
-                  onChangeText={e => console.log(e)}
+                  onChangeText={setFullName}
                   placeholder={'Full Name'}
                />
 
@@ -74,8 +94,8 @@ const SignUpScreen = () => {
                />
 
                <InputComponent
-                  onChangeText={e => console.log(e)}
-                  placeholder={'Country'}
+                  onChangeText={setCity}
+                  placeholder={'City'}
                />
          </View>
 

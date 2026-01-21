@@ -10,9 +10,6 @@ import { scale } from "../../../theme/scale";
 import { renderMarginBottom } from "../../../utils/ui-utils";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import SingleList from "../../../components/singleList/component";
-import SimpleLineIcons from 'react-native-vector-icons/SimpleLineIcons';
-import MaterialIcons from "react-native-vector-icons/MaterialIcons";
-import Ionicons from 'react-native-vector-icons/Ionicons';
 
 const ProfileScreen = () => {
     const styles = createStyles();
@@ -38,22 +35,15 @@ const ProfileScreen = () => {
             {renderMarginBottom(12)}
             <Text style={styles.title}>General</Text>
             {renderMarginBottom(6)}
-            <SingleList component={<MaterialCommunityIcons name="cards-heart-outline" size={scale(24)} color={colors.bell} />} text={"Favourite Cars"}/>
-            <SingleList component={<MaterialCommunityIcons name="av-timer" size={scale(24)} color={colors.bell} />} text={"Previous Rent"}/>
-            <SingleList component={<MaterialCommunityIcons name="bell-outline" size={scale(24)} color={colors.bell} />} text={"Notification"}/>
-            {renderMarginBottom(12)}
-            <Text style={styles.title}>Support</Text>
-            {renderMarginBottom(6)}
-            <SingleList component={<SimpleLineIcons name="settings" size={scale(24)} color={colors.bell} />} text={"Settings"}/>
-            <SingleList component={<Ionicons name="language-outline" size={scale(24)} color={colors.bell} />} text={"Languages"}/>
-            <SingleList component={<Ionicons name="person-add-outline" size={scale(20)} color={colors.bell} />} text={"Invite Friends"}/>
-            <SingleList component={<MaterialIcons name="policy" size={scale(24)} color={colors.bell} />} text={"Privacy Policy"}/>
-            <SingleList component={<MaterialCommunityIcons name="headphones" size={scale(24)} color={colors.bell} />} text={"Customer Support"}/>
-            <SingleList component={<MaterialCommunityIcons name="logout" size={scale(24)} color={colors.bell} />} text={"Logout"}/>
-            <Pressable  onPress={() => navigate('AdminStack', {screen: 'AdminDashboard',})}>
-                <SingleList component={<MaterialCommunityIcons name="logout" size={scale(24)} color={colors.bell} />} text={"Admin"}/>
+            <Pressable onPress={() => navigate('rootStack', {screen: 'FavCarScreen',})}>
+                <SingleList component={<MaterialCommunityIcons name="cards-heart-outline" size={scale(24)} color={colors.bell} />} text={"Favourite Cars"}/>
             </Pressable>
-            {renderMarginBottom(32)}
+            <SingleList component={<MaterialCommunityIcons name="av-timer" size={scale(24)} color={colors.bell} />} text={"Previous Bookings"}/>
+            <Pressable onPress={() => navigate('rootStack', {screen: 'AddCarScreen',})}>
+                <SingleList component={<MaterialCommunityIcons name="car-multiple" size={scale(24)} color={colors.bell} />} text={"Add Car"}/>
+            </Pressable>
+            <SingleList component={<MaterialCommunityIcons name="logout" size={scale(24)} color={colors.bell} />} text={"Logout"}/>
+            {renderMarginBottom(12)}
             {renderMarginBottom(32)}
             {renderMarginBottom(40)}
            </ScrollView>

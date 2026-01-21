@@ -1,9 +1,8 @@
 export interface ICarBrandProps {
     text: string;
-    image?: string;
+    image?: any;
     onPress? : () => void;
     isSelected? : number;
     isHorizontal?: boolean;
     item?: number;
-
 }

@@ -12,48 +12,41 @@ import { ICarComponentProps } from './ICar.props';
 import FavouriteComponent from '../favourite/component';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 
-const CarComponent = ({bottomActions, onPress}: ICarComponentProps) => {
+const CarComponent = ({name, location, image_url, rating, seats, pricePerDay, onPress, bottomActions,}: ICarComponentProps) => {
   const styles = createStyles();
-  const {ferrari} = assets;
-
+  console.log('IMAGE URL:', image_url);
   return (
     <Pressable onPress={onPress} style={styles.container}>
-      <FavouriteComponent/>
+      <FavouriteComponent favStyles={{}}/>
         <View style={styles.carBackground}>
-          <Image source={ferrari} resizeMode='contain' style={styles.carImage}/>
+          <Image source={{ uri: image_url?.startsWith('http') ? image_url : 'https://placehold.co/400x250/png?text=Car' }} resizeMode='cover' style={styles.carImage}/>
         </View>
         <View style={styles.textContainer}>
           {renderMarginBottom(4)}
-            <Text style={styles.title}>Ferrari</Text>
+            <Text style={styles.title}>{name}</Text>
             {renderMarginBottom(4)}
             <View style={styles.flex}>
-                <Text style={styles.title}>5.0</Text>
+                <Text style={styles.title}>{(rating ?? 4.5).toFixed(1)}{' '}</Text>
                 <FontAwesome name="star" size={scale(14)} color={colors.star}/>
-                {/*<MaterialIcons name='star' size={scale(20)} color={colors.star}/>
-                <MaterialIcons name='star-half' size={scale(20)} color={colors.star}/>
-                <MaterialIcons name='star-outline' size={scale(20)} color={colors.star}/>
-                <MaterialIcons name='star-outline' size={scale(20)} color={colors.star}/>*/}
             </View>
             {renderMarginBottom(4)}
             <View style={styles.flex}>
                 <MaterialIcons name="location-pin" size={scale(16)} color={colors.bell}/>
-                <Text style={styles.text}>Washington DC</Text>
+                <Text style={styles.text}>{location}</Text>
             </View>
             {renderMarginBottom(6)}
-            {bottomActions?(
-              bottomActions
-            ) : (<View style={[styles.flex, styles.priceContainer]}>
+            <View style={[styles.flex, styles.priceContainer]}>
               <View style={styles.flex}>
                 <MaterialCommunityIcons name="sofa-single-outline" size={scale(16)} color={colors.bell}/>
-                <Text style={[styles.text, styles.textBold]}>4 Seats</Text>
+                <Text style={[styles.text, styles.textBold]}>{seats} Seats</Text>
              </View>
              <View style={styles.flex}>
                 <Pressable style={styles.dollarContainer}>
                   <Fontisto name="dollar" size={scale(8)} color={colors.bell}/>
                 </Pressable>
-                <Text style={[styles.text, styles.textBold, styles.price]}>175/Day</Text>
+                <Text style={[styles.text, styles.textBold, styles.price]}>{pricePerDay}/Day</Text>
              </View>
-            </View>) }
+            </View>
         </View>
     </Pressable>
   );

@@ -38,22 +38,6 @@ const ImageSlider = ({images}: {images: string[]}) => {
           {useNativeDriver: false, listener: handleScroll},
         )}
       />
-
-      <View style={styles.dots}>
-        {images.map((_, index) => (
-          <View
-            key={index}
-            style={[
-              [
-                {
-                  backgroundColor: index === currentIndex ? '#333' : '#bbb',
-                },
-                styles.dot,
-              ],
-            ]}
-          />
-        ))}
-      </View>
     </View>
   );
 };

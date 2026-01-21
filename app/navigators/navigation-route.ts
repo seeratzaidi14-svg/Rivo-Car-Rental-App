@@ -1,12 +1,3 @@
-export type AdminStackParamList = {
-  ['AdminDashboard']: undefined;
-  ['ManageCars']: undefined;
-  ['AddCar']: undefined;  
-  ['ViewBookings']: undefined;
-  ['UserMessages']: undefined;
-  ['ManageUsers']: undefined;
-  ['AdminChatScreen']: undefined;
-};
 
 export type NavigatorParamList = {
   ['OnBoardingScreen']: undefined;
@@ -20,7 +11,7 @@ export type NavigatorParamList = {
   ['ProfileScreen']: undefined;
   ['NotificationScreen']: undefined;
   ['MessageScreen']: undefined;
-  ['CarScreen']: undefined;
+  ['CarDetailScreen']: undefined;
   ['rootStack']: undefined;
   ['ReviewScreen']: undefined;
   ['BookingScreen']: undefined;
@@ -29,7 +20,8 @@ export type NavigatorParamList = {
   ['BookingStatusScreen']: undefined;
   ['EditScreen']: undefined;
   ['ChatScreen']: undefined;
-  ['AdminStack']:{ screen: keyof AdminStackParamList; params?: undefined;}
+  ['AddCarScreen']: undefined;
+  ['FavCarScreen']: undefined;
 };
 
 export type ScreenName = keyof NavigatorParamList;

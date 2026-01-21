@@ -1,48 +1,78 @@
 import { View, Text, ScrollView, Image, Pressable} from 'react-native';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import HeaderComponent from '../../components/header/component';
 import Button from '../../components/button/component';
 import { createStyles } from './cardetail.styles';
 import ImageSlider from '../../components/slider/component';
 import { renderBorderBottom, renderMarginBottom, renderMarginTop } from '../../utils/ui-utils';
-import AntDesign from 'react-native-vector-icons/AntDesign';
-import Feather from 'react-native-vector-icons/Feather';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import { scale } from '../../theme/scale';
 import { colors } from '../../theme/colors';
 import assets from '../../assets';
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import FeatureComponent from '../../components/feature/component';
 import ReviewComponent from '../../components/review/component';
 import { FlatList } from 'react-native-gesture-handler';
 import { navigate } from '../../navigators/navigation-utilities';
+import { supabase } from '../../services/supabaseClient';
+import AntDesign from 'react-native-vector-icons/AntDesign';
 
-const CarScreen = () => {
+const CarDetailScreen = ({route}: any) => {
     const {person} = assets;
+    const {car} = route.params;
     const styles = createStyles();
-    const data = [
-    'https://images.pexels.com/photos/170811/pexels-photo-170811.jpeg?_gl=1*mpdcu2*_ga*ODQ4NjE0NzkzLjE3NTc5MjI1NTI.*_ga_8JE65Q40S6*czE3NjUyNzgwODckbzMkZzEkdDE3NjUyNzg0NTAkajU5JGwwJGgw',
-    'https://images.pexels.com/photos/170811/pexels-photo-170811.jpeg?_gl=1*mpdcu2*_ga*ODQ4NjE0NzkzLjE3NTc5MjI1NTI.*_ga_8JE65Q40S6*czE3NjUyNzgwODckbzMkZzEkdDE3NjUyNzg0NTAkajU5JGwwJGgw',
-    'https://images.pexels.com/photos/170811/pexels-photo-170811.jpeg?_gl=1*mpdcu2*_ga*ODQ4NjE0NzkzLjE3NTc5MjI1NTI.*_ga_8JE65Q40S6*czE3NjUyNzgwODckbzMkZzEkdDE3NjUyNzg0NTAkajU5JGwwJGgw',
-  ];
+    
+  const [carData, setCarData] = useState<any>(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchCar = async () => {
+      const { data, error } = await supabase
+        .from('cars')
+        .select('*, users(full_name)')
+        .eq('id', car.id) 
+        .single();
+
+      if (error) {
+        console.error('Error fetching car:', error);
+      } else {
+        setCarData(data);
+      }
+
+      setLoading(false);
+    };
+
+    fetchCar();
+  }, []);
+
+  if (loading || !carData) {
+    return (
+      <View style={styles.container}>
+        <HeaderComponent title="Car Details" hasBack />
+        <Text style={{ padding: 20 }}>Loading...</Text>
+      </View>
+    );
+  }
+
+  const images = carData.image_url
+    ? [carData.image_url]
+    : ['https://placehold.co/400x250/png?text=Car'];
     return (
         <View style={styles.container}>
             <HeaderComponent title="Car Details" hasBack/>
             <ScrollView showsHorizontalScrollIndicator={false} style={styles.flex}>
-                <ImageSlider images = {data} />
+                <ImageSlider images = {images} />
                 {renderMarginTop(12)}
                 <View style={styles.main}>
                     <View>
                          <View style={styles.titleContainer}>
                      <View style={styles.flex}>
-                         <Text style={styles.title}>Tesla Model S</Text>
-                         <Text style={styles.text}>A car with high specs that is rented at an affordable price</Text>
+                         <Text style={styles.title}>{car.name}</Text>
                       </View>
                       <View>
                          <View style={styles.reviewContainer}>
-                             <Text style={styles.textBold}>5.0 <FontAwesome name="star" size={scale(18)} color={colors.star}/></Text>
+                             <Text style={styles.textBold}>{(car.rating ?? 4.5).toFixed(1)}{' '}<FontAwesome name="star" size={scale(18)} color={colors.star}/></Text>
                          </View>
-                         <Text style={[styles.text, styles.f12]}>(100+ Reviews)</Text>
+                         <Text style={[styles.text, styles.f12]}>({car.review_count ?? 0} Reviews)</Text>
                        </View>
                     </View>
                     {renderMarginBottom(12)}
@@ -51,12 +81,9 @@ const CarScreen = () => {
                     <View style={styles.profile}>
                         <View style={styles.cg2}>
                           <Image source={person} style={styles.person}/>
-                          <Text style={styles.ownerName}>John Doe</Text>
+                          <Text style={styles.ownerName}>{carData.users?.full_name ?? 'Car Owner'}</Text>
                         </View>
                         <View style={styles.cg2}>
-                         <Pressable style={styles.iconBorder}>
-                             <Feather name="phone" size={scale(22)} color={colors.bell} />
-                         </Pressable>
                          <Pressable style={styles.iconBorder}>
                              <AntDesign name="message1" size={scale(20)} color={colors.bell}/>
                          </Pressable>
@@ -67,15 +94,13 @@ const CarScreen = () => {
                         <Text style={styles.title}>Car Features</Text>
                         {renderMarginTop(12)}
                         <View style={styles.cg2}>
-                           <FeatureComponent/>
-                           <FeatureComponent/>
-                           <FeatureComponent/>
+                           <FeatureComponent iconName={'sofa-single-outline'} title={'Capacity'} value={car.seats != null ? `${car.seats} Seats` : 'N/A'}/>
+                           <FeatureComponent iconName={'gas-station'} title={'Fuel Type'} value={car.fuel_type && car.fuel_type.trim() !== '' ? car.fuel_type : 'N/A'}/>
+                           <FeatureComponent iconName={'car-shift-pattern'} title={'Transmission'} value={car.transmission && car.transmission.trim() !== '' ? car.transmission : 'N/A'}/>
                         </View>
                         {renderMarginTop(12)}
                         <View style={styles.cg2}>
-                           <FeatureComponent/>
-                           <FeatureComponent/>
-                           <FeatureComponent/>
+                           <FeatureComponent iconName={'map-marker'} title={'Location'} value={car.location ?? 'N/A'}/>
                         </View>
                     </View> 
                     {renderMarginTop(18)}
@@ -93,10 +118,10 @@ const CarScreen = () => {
                 </View>
                 </View>
             </ScrollView>
-            <Button onPress={() => navigate('BookingScreen')} text="Book Now" buttonStyles={styles.btn}/>
+            <Button onPress={() => navigate('BookingScreen', {car})} text="Book Now" buttonStyles={styles.btn}/>
             {renderBorderBottom(10)}
         </View>
     )
 }
 
-export default CarScreen;
+export default CarDetailScreen;

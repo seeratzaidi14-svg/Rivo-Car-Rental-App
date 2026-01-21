@@ -5,16 +5,22 @@ import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityI
 import { colors } from "../../theme/colors";
 import { scale } from "../../theme/scale";
 
-const FeatureComponent = () => {
+type FeatureProps = {
+    iconName: string;
+    title: string;
+    value: string;
+};
+
+const FeatureComponent = ({iconName, title, value}: FeatureProps) => {
     const styles = createStyles();
     return (
         <Pressable style={styles.featureContainer}>
          <Pressable style={styles.featureBorder}>
-                <MaterialCommunityIcons name="sofa-single-outline" color={colors.bell} size={scale(20)} />
+                <MaterialCommunityIcons name={iconName} color={colors.bell} size={scale(20)} />
          </Pressable>
          <View>
-             <Text style={styles.featureTitle}>Capacity</Text>
-             <Text style={styles.featureInfo}>5 Seats</Text>
+             <Text style={styles.featureTitle}>{title}</Text>
+             <Text style={styles.featureInfo}>{value }</Text>
          </View>
        </Pressable>
     )

@@ -6,16 +6,17 @@ import assets from "../../assets";
 import { ICarBrandProps } from "./ICarBrand.props";
 import { renderMarginTop } from "../../utils/ui-utils";
 
-const CarBrandComponent = ({text, isHorizontal = false, isSelected = 1, item}: ICarBrandProps) =>{
+const CarBrandComponent = ({image, onPress, text, isHorizontal = false, isSelected = 1, item,}: ICarBrandProps) =>{
     const styles = createStyles(isHorizontal, isSelected === item);
     const {tesla} = assets;
+
     return(
-     <Pressable style={styles.brandContainer}>
+     <Pressable style={styles.brandContainer} onPress={() => {console.log('Brand pressed:', text); onPress?.();}}>
          <View style={styles.brand}> 
                 <Image 
                     style={styles.brandImage} 
                     resizeMode="contain" 
-                    source={tesla}
+                    source={image}
                 />
          </View>
          {renderMarginTop(4)}
