@@ -1,5 +1,5 @@
-import React, { use, useState } from 'react';
-import { View, Text, ScrollView, Pressable, TextInput, TouchableOpacity, Image, Alert, KeyboardAvoidingView, Platform } from 'react-native';
+import React, { useState } from 'react';
+import { View, Text, TouchableOpacity, Image, Alert, KeyboardAvoidingView, Platform } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import HeaderComponent from '../../components/header/component';
 import { createStyles } from './addCar.styles';
@@ -10,7 +10,6 @@ import Button from '../../components/button/component';
 import { uploadCarAndInsert } from '../../utils/uploadCarAndInsert';
 import { useNavigation } from '@react-navigation/native';
 import DropDownPicker from 'react-native-dropdown-picker';
-import HomeScreen from '../home/home.screen';
 
 const AddCarScreen = () => {
   const styles = createStyles();

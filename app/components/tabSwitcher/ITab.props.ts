@@ -9,6 +9,7 @@ export interface ITabProps {
   tabStyle?: ViewStyle | ViewStyle[];
   tabTextStyle?: TextStyle;
   leftAction?: JSX.Element;
+  selected?: string;
 }
 
 export interface ITab {
@@ -16,5 +17,4 @@ export interface ITab {
   label: string;
   value: string;
   component?: JSX.Element;
-
 }

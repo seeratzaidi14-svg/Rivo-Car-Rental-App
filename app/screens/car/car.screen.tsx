@@ -15,11 +15,13 @@ import { FlatList } from 'react-native-gesture-handler';
 import { navigate } from '../../navigators/navigation-utilities';
 import { supabase } from '../../services/supabaseClient';
 import AntDesign from 'react-native-vector-icons/AntDesign';
+import { useAuth } from '../../utils/useAuth';
 
 const CarDetailScreen = ({route}: any) => {
-    const {person} = assets;
-    const {car} = route.params;
-    const styles = createStyles();
+  const {person} = assets;
+  const {car} = route.params;
+  const styles = createStyles();
+  const {user} = useAuth();
     
   const [carData, setCarData] = useState<any>(null);
   const [loading, setLoading] = useState(true);
@@ -52,6 +54,8 @@ const CarDetailScreen = ({route}: any) => {
       </View>
     );
   }
+
+  const isOwner = user?.id === carData.user_id;
 
   const images = carData.image_url
     ? [carData.image_url]
@@ -100,7 +104,8 @@ const CarDetailScreen = ({route}: any) => {
                         </View>
                         {renderMarginTop(12)}
                         <View style={styles.cg2}>
-                           <FeatureComponent iconName={'map-marker'} title={'Location'} value={car.location ?? 'N/A'}/>
+                           <FeatureComponent iconName={'map-marker'} title={'Location'} value={carData.location ?? 'N/A'}/>
+                           <FeatureComponent iconName={'currency-usd'} title={'Price per day'} value={car.pricePerDay ?? 'N/A'}/>
                         </View>
                     </View> 
                     {renderMarginTop(18)}
@@ -118,7 +123,9 @@ const CarDetailScreen = ({route}: any) => {
                 </View>
                 </View>
             </ScrollView>
-            <Button onPress={() => navigate('BookingScreen', {car})} text="Book Now" buttonStyles={styles.btn}/>
+            {!isOwner && (
+              <Button onPress={() => navigate('BookingScreen', {car: carData})} text="Book Now" buttonStyles={styles.btn}/>
+            )}
             {renderBorderBottom(10)}
         </View>
     )

@@ -9,9 +9,10 @@ import Button from '../button/component';
 interface IDateComponentProps {
   visible: boolean;
   setVisible: (e: boolean) => void;
+  onConfirm: (start: string, end: string) => void;
 }
 
-const DateComponent = ({ visible, setVisible }: IDateComponentProps) => {
+const DateComponent = ({ visible, setVisible, onConfirm }: IDateComponentProps) => {
   const [startDate, setStartDate] = useState<string | null>(null);
   const [endDate, setEndDate] = useState<string | null>(null);
   const styles = createStyles();
@@ -88,7 +89,9 @@ const DateComponent = ({ visible, setVisible }: IDateComponentProps) => {
 
           <Button
             onPress={() => {
-              console.log('SELECTED RANGE:', startDate, endDate);
+              if (startDate && endDate) {
+                onConfirm(startDate, endDate);
+              }
               setVisible(false);
             }}
             text="Done"

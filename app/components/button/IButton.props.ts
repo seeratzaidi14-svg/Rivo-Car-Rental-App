@@ -7,4 +7,5 @@ export interface IButtonProps {
   buttonStyles?: ViewStyle;
   textStyles?: TextStyle;
   component?: JSX.Element;
+  disabled?: boolean;
 }

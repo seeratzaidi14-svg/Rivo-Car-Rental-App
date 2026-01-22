@@ -12,8 +12,8 @@ export const createStyles = (isHorizontal: boolean | undefined, isSelected: bool
        flexDirection: isHorizontal ? 'row' : 'column',
        columnGap: isHorizontal ? scale(4) : 0,
        backgroundColor: isSelected? colors.bgTab : colors.background,
-       paddingHorizontal: scale(4),
-       paddingVertical: scale(4),
+       paddingHorizontal: scale(8),
+       paddingVertical: scale(8),
        borderRadius: scale(30),
     },
     
