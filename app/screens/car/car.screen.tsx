@@ -60,6 +60,53 @@ const CarDetailScreen = ({route}: any) => {
   const images = carData.image_url
     ? [carData.image_url]
     : ['https://placehold.co/400x250/png?text=Car'];
+
+  const handleMessageOwner = async () => {
+    if (!user?.id || !carData.user_id) return;
+
+    const currentUserId = user.id;
+    const ownerId = carData.user_id;
+
+    const user1 = currentUserId < ownerId ? currentUserId : ownerId;
+    const user2 = currentUserId < ownerId ? ownerId : currentUserId;
+
+    const {data: existingConv, error} = await supabase
+     .from('conversations')
+     .select('*')
+     .eq('user1_id', user1)
+     .eq('user2_id', user2)
+     .single();
+
+     let conversationId = existingConv?.id;
+
+     if (!conversationId) {
+      const {data: newConv, error: createError} = await supabase
+       .from('conversations')
+       .insert({
+        user1_id: user1,
+        user2_id: user2,
+       })
+       .select()
+       .single();
+
+       if (createError) {
+        console.error('Conversation create error:', createError.message);
+        return;
+       }
+
+       conversationId = newConv.id;
+     }
+
+     navigate('rootStack', {
+      screen: 'ChatScreen',
+      params: {
+        conversationId,
+        otherUserIds: ownerId,
+        name: carData.users?.full_name ?? 'User',
+      },
+     });
+  };
+
     return (
         <View style={styles.container}>
             <HeaderComponent title="Car Details" hasBack/>
@@ -88,9 +135,9 @@ const CarDetailScreen = ({route}: any) => {
                           <Text style={styles.ownerName}>{carData.users?.full_name ?? 'Car Owner'}</Text>
                         </View>
                         <View style={styles.cg2}>
-                         <Pressable style={styles.iconBorder}>
+                         {!isOwner && (<Pressable style={styles.iconBorder} onPress={handleMessageOwner}>
                              <AntDesign name="message1" size={scale(20)} color={colors.bell}/>
-                         </Pressable>
+                         </Pressable>)}
                         </View>
                     </View>
                     {renderMarginTop(18)}                 

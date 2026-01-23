@@ -46,6 +46,13 @@ export const createStyles = (unRead?: boolean) =>
       flexShrink: 1,
     },
 
+    Text: {
+      marginLeft: 16, 
+      marginBottom: 8, 
+      fontWeight: '600', 
+      fontSize: 16,
+    },
+
     iconContainer: {
       height: scale(40),
       width: scale(40),

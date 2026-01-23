@@ -27,7 +27,7 @@ const ProfileScreen = () => {
                         <Text style={styles.email}>johndoe@gmail.com</Text>
                     </View>
                 </View>
-                <Pressable onPress={() => navigate('rootStack', {screen: 'EditScreen',})} style={styles.aic}>
+                <Pressable onPress={() => console.log()} style={styles.aic}>
                     <Feather name="edit-3" size={scale(18)} color={colors.bell}/>
                     <Text style={styles.editProfile}>Edit Profile</Text>
                 </Pressable>
@@ -38,7 +38,9 @@ const ProfileScreen = () => {
             <Pressable onPress={() => navigate('rootStack', {screen: 'FavCarScreen',})}>
                 <SingleList component={<MaterialCommunityIcons name="cards-heart-outline" size={scale(24)} color={colors.bell} />} text={"Favourite Cars"}/>
             </Pressable>
-            <SingleList component={<MaterialCommunityIcons name="av-timer" size={scale(24)} color={colors.bell} />} text={"Previous Bookings"}/>
+            <Pressable onPress={() => navigate('rootStack', {screen: 'PastBookingScreen'})}>
+                <SingleList component={<MaterialCommunityIcons name="av-timer" size={scale(24)} color={colors.bell} />} text={"Previous Bookings"}/>
+            </Pressable>
             <Pressable onPress={() => navigate('rootStack', {screen: 'AddCarScreen',})}>
                 <SingleList component={<MaterialCommunityIcons name="car-multiple" size={scale(24)} color={colors.bell} />} text={"Add Car"}/>
             </Pressable>

@@ -10,6 +10,6 @@ export interface IInputProps {
   keyboardType?: KeyboardTypeOptions | undefined;
   leftAction?: JSX.Element;
   containerStyle?: ViewStyle;
-  defaultValue?: string;
+  value?: string;
   editable?: boolean;
 }

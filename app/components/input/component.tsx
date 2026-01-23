@@ -8,6 +8,7 @@ import {IInputProps} from './input.props';
 const InputComponent = ({
   onChangeText,
   secureTextEntry,
+  value,
   placeholder,
   isSecure,
   onSecurePress,
@@ -22,6 +23,7 @@ const InputComponent = ({
     <View style={[styles.container, containerStyle]}>
       {leftAction}
       <TextInput
+        value={value}
         placeholder={placeholder}
         style={styles.input}
         placeholderTextColor={colors.placeholder}

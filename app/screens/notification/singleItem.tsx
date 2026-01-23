@@ -6,7 +6,7 @@ import {colors} from '../../theme/colors';
 import {renderMarginBottom} from '../../utils/ui-utils';
 import { createStyles } from './notification.styles';
 
-interface ISingleItemProps { unRead: boolean; title: string; time: string; text:string; }
+interface ISingleItemProps { unRead: boolean; title: string; time: string; text:string; onPress:{} }
 
 const SingleItem = ({unRead, title, time, text}: ISingleItemProps) => {
     const styles = createStyles(unRead);

@@ -6,9 +6,6 @@ import HeaderComponent from "../../../components/header/component";
 import { renderBorderBottom, renderMarginBottom } from "../../../utils/ui-utils";
 import Button from "../../../components/button/component";
 import { colors } from "../../../theme/colors";
-import { scale } from "../../../theme/scale";
-import Feather from "react-native-vector-icons/Feather";
-import EvilIcons from 'react-native-vector-icons/EvilIcons';
 import { navigate } from "../../../navigators/navigation-utilities";
 import { useRoute } from "@react-navigation/native";
 import { supabase } from "../../../services/supabaseClient";
@@ -109,7 +106,7 @@ const BookingStatusScreen = () => {
             {renderMarginBottom(8)}
             {renderMarginBottom(14)}
           </ScrollView> 
-          <Button onPress={() => navigate('tabStack', { screen: 'HomeScreen' })} text="Done" buttonStyles={styles.btn}/>  
+          <Button onPress={() => navigate('tabStack', { screen: 'NotificationScreen' })} text="Done" buttonStyles={styles.btn}/>  
             {renderMarginBottom(12)}
         </View>     
     );

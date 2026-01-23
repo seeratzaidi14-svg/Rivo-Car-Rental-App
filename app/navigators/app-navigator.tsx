@@ -31,18 +31,17 @@ import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import NotificationScreen from '../screens/notification/notification.screen';
 import MessageScreen from '../screens/message/message.screen';
 import SearchScreen from '../screens/search/search.screen';
-import CarScreen from '../screens/car/car.screen';
 import ReviewScreen from '../screens/review/review.screen';
 import BookingScreen from '../screens/booking/details/booking.screen';
 import BookingPaymentScreen from '../screens/booking/payment/payment.screen';
 import BookingConfirmationScreen from '../screens/booking/confirmation/confirmation.screen';
 import BookingStatusScreen from '../screens/booking/status/status.screen';
 import ProfileScreen from '../screens/account/profile/profile.screen';
-import EditScreen from '../screens/account/edit/edit.screen';
 import ChatScreen from '../screens/message/chat/chat.screen';
 import AddCarScreen from '../screens/AddCar/addCar.screen';
 import CarDetailScreen from '../screens/car/car.screen';
 import FavCarScreen from '../screens/favourite/fav.screen';
+import PastBookingScreen from '../screens/Past Bookings/pastBookings.screen';
 
 type NavigationProps = Partial<
   React.ComponentProps<typeof NavigationContainer>
@@ -237,13 +236,6 @@ const RootStack = () => {
         }}
       />
       <Stack.Screen
-        name="EditScreen"
-        component={EditScreen}
-        options={{
-          cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
-        }}
-      />
-      <Stack.Screen
         name="ChatScreen"
         component={ChatScreen}
         options={{
@@ -260,6 +252,13 @@ const RootStack = () => {
       <Stack.Screen
         name="FavCarScreen"
         component={FavCarScreen}
+        options={{
+          cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
+        }}
+      />
+      <Stack.Screen
+        name="PastBookingScreen"
+        component={PastBookingScreen}
         options={{
           cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
         }}

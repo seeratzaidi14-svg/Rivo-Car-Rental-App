@@ -7,8 +7,7 @@ export const HeaderAction = () => {
     const {person} = assets;
     return(
         <View style={styles.headerAction}>
-            <Image source = {person} style={styles.person}/>
-            <Text style={styles.title}>Chat</Text>
+            <Image/>
         </View>
     );
 };

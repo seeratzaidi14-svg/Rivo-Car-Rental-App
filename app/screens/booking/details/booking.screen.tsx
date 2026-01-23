@@ -16,6 +16,8 @@ import { navigate } from '../../../navigators/navigation-utilities';
 import { useRoute } from '@react-navigation/native';
 import { insertBooking } from '../../../services/booking.services';
 import { useAuth } from '../../../utils/useAuth';
+import { insertNotification } from '../../../services/notification.services';
+import { supabase } from '../../../services/supabaseClient';
 
 const BookingScreen = () => {
   const styles = createStyles();
@@ -47,6 +49,20 @@ const BookingScreen = () => {
 
       const totalPrice = rentalDays * (carData?.price ?? 0);
 
+      const {data: existing, error: existingErr} = await supabase
+      .from('bookings')
+      .select('*')
+      .eq('car_id', carData.id)
+      .lte('start_date', endDate)
+      .gte('end_date', startDate);
+
+      if (existingErr) throw existingErr;
+
+      if (existing.length > 0) {
+        Alert.alert('This car is already booked for the selected dates.');
+        return;
+      }
+
       const response = await insertBooking({
         userId: user.id,
         carId: carData.id,
@@ -60,6 +76,34 @@ const BookingScreen = () => {
       });
       
       if (response) {
+
+        await insertNotification({
+          userId: carData.user_id,
+          title: 'New Booking Received!🚗',
+          text: `${fullName} booked your car from ${startDate} to ${endDate}.`,
+          link: 'BookingConfirmationScreen',
+        });
+
+        await insertNotification({
+          userId: user.id,
+          title: 'Booking Successful!🎉',
+          text: `Your booking for "${carData.car_name}" is confirmed.`,
+          link: 'BookingStatusScreen',
+        });
+
+        const {data: existingConv} = await supabase
+         .from('conversations')
+         .select('id')
+         .or(`and(user1_id.eq.${user.id},user2_id.eq.${carData.user_id}), and(user1_id.eq.${carData.user_id},user2_id.eq.${user.id})`);
+
+         if (!existingConv || existingConv.length === 0) {
+          await supabase.from('conversations').insert({
+            user1_id: user.id,
+            user2_id: carData.user_id,
+            last_message: '',
+          });
+         }
+
         navigate('BookingPaymentScreen', {bookingId: response.id});
       }
     } catch (err) {
