@@ -35,7 +35,6 @@ const SignInScreen = () => {
       }
 
       Alert.alert('Success', 'Logged in successfully');
-      navigate('tabStack');
     } catch (err) {
       console.error(err);
       Alert.alert('Error', 'Something went wrong');

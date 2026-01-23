@@ -40,8 +40,8 @@ import ProfileScreen from '../screens/account/profile/profile.screen';
 import ChatScreen from '../screens/message/chat/chat.screen';
 import AddCarScreen from '../screens/AddCar/addCar.screen';
 import CarDetailScreen from '../screens/car/car.screen';
-import FavCarScreen from '../screens/favourite/fav.screen';
 import PastBookingScreen from '../screens/Past Bookings/pastBookings.screen';
+import { useAuth } from '../utils/useAuth';
 
 type NavigationProps = Partial<
   React.ComponentProps<typeof NavigationContainer>
@@ -250,13 +250,6 @@ const RootStack = () => {
         }}
       />
       <Stack.Screen
-        name="FavCarScreen"
-        component={FavCarScreen}
-        options={{
-          cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
-        }}
-      />
-      <Stack.Screen
         name="PastBookingScreen"
         component={PastBookingScreen}
         options={{
@@ -270,42 +263,23 @@ const RootStack = () => {
 };
 
 const CombinedStack = () => {
-  const isAuthenticated = false;
+  const {user, loading} = useAuth();
+
+  if (loading) {
+    return null;
+  }
   return (
     <Stack.Navigator screenOptions={{headerShown: false, animationEnabled: true}}>
-
-      <Stack.Screen
-        name="auth"
-        options={{
-          cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
-        }}
-        component={isAuthenticated ? TabStack : AuthStack}
-      />
-
-      <Stack.Screen
-        name="tabStack"
-        component={TabStack}
-        options={{
-          cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
-        }}
-      />
-
-      <Stack.Screen
-        name="authStack"
-        component={AuthStack}
-        options={{
-          cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
-        }}
-      />
-
-      <Stack.Screen
-        name="rootStack"
-        component={RootStack}
-        options={{
-          cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
-        }}
-      />
-
+      {user ? (
+        <>
+          <Stack.Screen name="tabStack" component={TabStack}/>
+          <Stack.Screen name="rootStack" component={RootStack}/>
+        </>
+      ) : (
+        <>
+         <Stack.Screen name="authStack" component={AuthStack}/>
+        </>
+      )}
     </Stack.Navigator>
   );
 };

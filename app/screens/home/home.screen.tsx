@@ -21,7 +21,7 @@ const HomeScreen = () => {
     const navigation = useNavigation();
     const {showFilter, setShowFilter} = useSearch();
 
-
+    const [searchText, setSearchText] = useState('');
     const [selectedBrand, setSelectedBrand] = useState<string | null>(null);
     const [cars, setCars] = useState<ICarComponentProps[]>([]);
 
@@ -94,15 +94,25 @@ const HomeScreen = () => {
 
     const brandList = [...new Set(uniqueBrands)].sort();
 
-    const filteredCars = selectedBrand 
-     ? cars.filter((car) => car.brand === selectedBrand)
-     : cars;
+    const filteredCars = cars.filter(car => {
+      const query = searchText.toLowerCase();
+
+      const matchesSearch =
+       car.name.toLowerCase().includes(query) ||
+       car.location.toLowerCase().includes(query);
+
+      const matchesBrand = selectedBrand
+       ? car.brand === selectedBrand
+       : true;
+
+      return matchesSearch && matchesBrand;
+    });
 
     return (
       <View style={styles.container}>
         <HeaderComponent title="Rivo"/>
           <View style={styles.main}>
-             <SearchComponent onFilterPress={() => setShowFilter(!showFilter)}/>
+             <SearchComponent value={searchText} onChangeText={setSearchText} onFilterPress={() => setShowFilter(!showFilter)}/>
              <View style={[styles.showCase, styles.p18]}>
                 <Text style={styles.text}> Brands </Text>
                 <FlatList showsHorizontalScrollIndicator={false} 

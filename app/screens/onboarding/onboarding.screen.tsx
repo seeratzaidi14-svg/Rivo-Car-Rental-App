@@ -1,13 +1,23 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import {Image, ImageBackground, Text, View} from 'react-native';
 import assets from '../../assets';
 import Button from '../../components/button/component';
 import {createStyles} from './onboarding.styles';
 import {navigate} from '../../navigators/navigation-utilities';
+import { useAuth } from '../../utils/useAuth';
 
 const OnBoardingScreen = () => {
   const styles = createStyles();
   const {logo, overlayBg, whiteCar} = assets;
+
+  const {user} = useAuth();
+
+  useEffect(() => {
+    if (user) {
+      navigate('tabStack');
+    }
+  }, [user]);
+  
   return (
     <ImageBackground
       resizeMode="cover"

@@ -21,6 +21,7 @@ const SearchScreen = () => {
     const {showFilter, setShowFilter} = useSearch();
     const navigation = useNavigation();
 
+    const [searchText, setSearchText] = useState('');
     const [selectedBrand, setSelectedBrand] = useState<string>('Toyota');
     const [cars, setCars] = useState<any[]>([]);
 
@@ -29,6 +30,7 @@ const SearchScreen = () => {
             const {data,error} = await supabase
             .from('cars')
             .select('*')
+            .or(`car_name.ilike.%${searchText}%, location.ilike.%${searchText}%`)
             .ilike('brand', `%${selectedBrand}%`);
 
             if (error) console.log('Error fetching cars:', error);
@@ -73,7 +75,7 @@ const SearchScreen = () => {
         <View style={styles.container}>
             <HeaderComponent title="Search" hasBack/>
             <ScrollView stickyHeaderIndices={[0]} showsVerticalScrollIndicator={false}>
-                <SearchComponent onFilterPress={() => setShowFilter(!showFilter)}/>
+                <SearchComponent value={searchText} onChangeText={setSearchText} onFilterPress={() => setShowFilter(!showFilter)}/>
 
                     <View style={[styles.showCase, styles.p18]}>
                         <FlatList

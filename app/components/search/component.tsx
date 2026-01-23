@@ -8,11 +8,13 @@ import { colors } from "../../theme/colors";
 import { scale } from "../../theme/scale";
 import { ISearchProps } from "./ISearch.props";
 
-const SearchComponent = ({onFilterPress}:ISearchProps) =>{
+const SearchComponent = ({onFilterPress, value, onChangeText}:ISearchProps) =>{
     const styles = createStyles();
     return(
         <View style={[styles.flexRow, styles.p18]}>
-                 <InputComponent onChangeText={e => console.log(e)} 
+                 <InputComponent 
+                    value={value}
+                    onChangeText={onChangeText ?? (() => {})}
                     leftAction={<MaterialIcons name="search" size={scale(24)} color={colors.bell}/>} 
                     containerStyle={styles.inputContainer} 
                     placeholder="Search...."/>
