@@ -63,6 +63,9 @@ const ProfileScreen = () => {
             <Pressable onPress={() => navigate('rootStack', {screen: 'PastBookingScreen'})}>
                 <SingleList component={<MaterialCommunityIcons name="av-timer" size={scale(24)} color={colors.bell} />} text={"Previous Bookings"}/>
             </Pressable>
+            <Pressable onPress={() => navigate('rootStack', {screen: 'MyCarScreen'})}>
+                <SingleList component={<MaterialCommunityIcons name="car" size={scale(24)} color={colors.bell} />} text={"My Rental Cars"}/>
+            </Pressable>
             <Pressable onPress={() => navigate('rootStack', {screen: 'AddCarScreen',})}>
                 <SingleList component={<MaterialCommunityIcons name="car-multiple" size={scale(24)} color={colors.bell} />} text={"Add Car"}/>
             </Pressable>

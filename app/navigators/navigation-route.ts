@@ -22,6 +22,7 @@ export type NavigatorParamList = {
   ['AddCarScreen']: undefined;
   ['FavCarScreen']: undefined;
   ['PastBookingScreen']: undefined;
+  ['MyCarScreen']: undefined;
 };
 
 export type ScreenName = keyof NavigatorParamList;

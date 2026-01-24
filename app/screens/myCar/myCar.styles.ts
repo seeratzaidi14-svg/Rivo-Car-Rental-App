@@ -12,27 +12,22 @@ export const createStyles = () =>
       paddingTop: scale(28),
     },
 
-    list: {
+    main: {
       paddingHorizontal: scale(18),
-      rowGap: scale(12),
+      paddingTop: scale(12),
     },
 
-    center: {
-      flex: 1,
-      justifyContent: 'center',
-      alignItems: 'center',
+    row: {
+      flexDirection: 'row',
+      columnGap: scale(12),
+      marginBottom: scale(12),
     },
 
     emptyText: {
+      textAlign: 'center',
+      marginTop: scale(40),
       fontSize: FontSize.FONT_14Px,
       color: colors.placeholder,
       fontFamily: typography.regular,
     },
-
-    row: {
-  flexDirection: 'row',
-  columnGap: scale(12),
-  marginBottom: scale(12),
-},
-
   });

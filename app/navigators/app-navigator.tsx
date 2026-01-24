@@ -42,6 +42,7 @@ import AddCarScreen from '../screens/AddCar/addCar.screen';
 import CarDetailScreen from '../screens/car/car.screen';
 import PastBookingScreen from '../screens/Past Bookings/pastBookings.screen';
 import { useAuth } from '../utils/useAuth';
+import MyCarScreen from '../screens/myCar/myCar.screen';
 
 type NavigationProps = Partial<
   React.ComponentProps<typeof NavigationContainer>
@@ -252,6 +253,13 @@ const RootStack = () => {
       <Stack.Screen
         name="PastBookingScreen"
         component={PastBookingScreen}
+        options={{
+          cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
+        }}
+      />
+      <Stack.Screen
+        name="MyCarScreen"
+        component={MyCarScreen}
         options={{
           cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
         }}
