@@ -3,13 +3,11 @@ import {Image, Pressable, Text, View} from 'react-native';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import Fontisto from 'react-native-vector-icons/Fontisto';
-import assets from '../../assets';
 import {colors} from '../../theme/colors';
 import {scale} from '../../theme/scale';
 import {renderMarginBottom} from '../../utils/ui-utils';
 import {createStyles} from './car.styles';
 import { ICarComponentProps } from './ICar.props';
-import FavouriteComponent from '../favourite/component';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 
 const CarComponent = ({name, location, image_url, rating, seats, pricePerDay, onPress, bottomActions,}: ICarComponentProps) => {
@@ -17,7 +15,6 @@ const CarComponent = ({name, location, image_url, rating, seats, pricePerDay, on
   console.log('IMAGE URL:', image_url);
   return (
     <Pressable onPress={onPress} style={styles.container}>
-      <FavouriteComponent favStyles={{}}/>
         <View style={styles.carBackground}>
           <Image source={{ uri: image_url?.startsWith('http') ? image_url : 'https://placehold.co/400x250/png?text=Car' }} resizeMode='cover' style={styles.carImage}/>
         </View>

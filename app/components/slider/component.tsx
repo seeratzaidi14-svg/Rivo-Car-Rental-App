@@ -2,7 +2,6 @@ import React, {useRef, useState} from 'react';
 import {View, Image, FlatList, Animated, Dimensions} from 'react-native';
 import {createStyles} from './slider.styles';
 import { scale } from '../../theme/scale';
-import FavouriteComponent from '../favourite/component';
 
 const {width} = Dimensions.get('window');
 
@@ -18,7 +17,6 @@ const ImageSlider = ({images}: {images: string[]}) => {
   const styles = createStyles();
   return (
     <View>
-      <FavouriteComponent favStyles={{height: scale(30), width: scale(30), right: scale(18), top: scale(12)}}/>
       <FlatList
         ref={flatListRef}
         data={images}
