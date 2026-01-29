@@ -26,7 +26,7 @@ const BookingPaymentScreen = () => {
   const [selectedMethod, setSelectedMethod] = useState('credit_card');
 
   const route = useRoute<any>();
-  const bookingId = route?.params?.bookingId; // this will now be a plain string
+  const bookingId = route?.params?.bookingId; 
 
 
 
